@@ -6,6 +6,7 @@ class CreateTradingDays < ActiveRecord::Migration[8.1]
       t.decimal :atr14, precision: 12, scale: 4
       t.datetime :session_open
       t.datetime :session_close
+      t.index [:date, :symbol], unique: true
 
       t.timestamps
     end

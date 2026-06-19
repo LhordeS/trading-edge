@@ -6,7 +6,7 @@ class CreateMarketEvents < ActiveRecord::Migration[8.1]
       t.datetime :occurred_at, null: false
       t.decimal :price, precision: 12, scale: 4
       t.string :direction
-      t.jsonb :metadata
+      t.jsonb :metadata, default: {}, null: false
 
       t.timestamps
     end
