@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  setup_occurrence: one
+  lookahead_minutes: 1
+  mfe: 9.99
+  mae: 9.99
+  r_multiple: 9.99
+  close_price: 9.99
+  target_hit: false
+  stop_hit: false
+
+two:
+  setup_occurrence: two
+  lookahead_minutes: 1
+  mfe: 9.99
+  mae: 9.99
+  r_multiple: 9.99
+  close_price: 9.99
+  target_hit: false
+  stop_hit: false

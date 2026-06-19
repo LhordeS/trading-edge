@@ -1,0 +1,2 @@
+class TradingDay < ApplicationRecord
+end

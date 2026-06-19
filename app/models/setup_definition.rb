@@ -1,0 +1,2 @@
+class SetupDefinition < ApplicationRecord
+end
