@@ -24,4 +24,12 @@ class CsvCandleImporter
       }
     end
   end
+
+  def import!(trading_day:)
+    parsed_candles = candles
+    parsed_candles.each do |candle_data|
+      trading_day.candles.create!(candle_data)
+    end
+    parsed_candles.size
+  end
 end
