@@ -10,9 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_19_101007) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_28_031331) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "candles", force: :cascade do |t|
+    t.decimal "close", null: false
+    t.datetime "created_at", null: false
+    t.decimal "high", null: false
+    t.decimal "low", null: false
+    t.decimal "open", null: false
+    t.datetime "timestamp", null: false
+    t.bigint "trading_day_id", null: false
+    t.datetime "updated_at", null: false
+    t.integer "volume"
+    t.index ["trading_day_id", "timestamp"], name: "index_candles_on_trading_day_id_and_timestamp", unique: true
+    t.index ["trading_day_id"], name: "index_candles_on_trading_day_id"
+  end
 
   create_table "market_events", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -72,6 +86,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_19_101007) do
     t.index ["date", "symbol"], name: "index_trading_days_on_date_and_symbol", unique: true
   end
 
+  add_foreign_key "candles", "trading_days"
   add_foreign_key "market_events", "trading_days"
   add_foreign_key "outcomes", "setup_occurrences"
   add_foreign_key "setup_occurrences", "setup_definitions"

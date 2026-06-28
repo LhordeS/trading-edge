@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  trading_day: one
+  timestamp: 2026-06-28 12:13:31
+  open: 9.99
+  high: 9.99
+  low: 9.99
+  close: 9.99
+  volume: 1
+
+two:
+  trading_day: two
+  timestamp: 2026-06-28 12:13:31
+  open: 9.99
+  high: 9.99
+  low: 9.99
+  close: 9.99
+  volume: 1
