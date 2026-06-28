@@ -1,0 +1,7 @@
+<h1>TradingDays#index</h1>
+<% @trading_days.each do |trading_day| %>
+  <li>
+    <%= link_to trading_day.date, trading_day %>
+    (<%= trading_day.symbol %>)
+  </li>
+<% end %>
