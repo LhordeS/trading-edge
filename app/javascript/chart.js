@@ -1,27 +1,31 @@
-const chartContainer = document.getElementById("candlestick-chart")
-const candlesData = document.getElementById("candles-data");
+document.addEventListener("turbo:load", () => {
+  const chartContainer = document.getElementById("candlestick-chart");
+  const candlesData = document.getElementById("candles-data");
 
-if (candlesData) {
-  const candles = JSON.parse(candlesData.textContent);
-  const chartCandles = candles.map((candle) => {
-    return {
-      time: candle.timestamp,
-      open: Number(candle.open),
-      high: Number(candle.high),
-      low: Number(candle.low),
-      close: Number(candle.close),
-    };
-  });
+  if (candlesData) {
+    const candles = JSON.parse(candlesData.textContent);
+    const chartCandles = candles.map((candle) => {
+      return {
+        time: Math.floor(new Date(candle.timestamp).getTime() / 1000),
+        open: Number(candle.open),
+        high: Number(candle.high),
+        low: Number(candle.low),
+        close: Number(candle.close),
+      };
+    });
 
-  const chart = LightweightCharts.createChart(candlesData, {
-    width: candlesData.clientWidth,
-    height: 500,
-  });
+    const chart = LightweightCharts.createChart(chartContainer, {
+      width: candlesData.clientWidth,
+      height: 500,
+    });
 
-  const candleSeries = chart.addSeries(LightweightCharts.CandlestickSeries);
+    const candleSeries = chart.addSeries(LightweightCharts.CandlestickSeries);
 
-  candleSeries.setData(chartCandles);
-}
+    console.log(chartCandles.slice(0, 10));
+
+    candleSeries.setData(chartCandles);
+  }
+});
 
 // console.log("chart.js loaded");
 
