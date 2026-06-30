@@ -23,16 +23,4 @@ class TradingDay < ApplicationRecord
 
     ordered_candles.where(timestamp: start_time...end_time)
   end
-
-  def candles_after_opening_range
-    ordered_candles.where("timestamp > ?", opening_range_candles.last.timestamp)
-  end
-
-  def opening_range_high
-    opening_range_candles.maximum(:high)
-  end
-
-  def opening_range_low
-    opening_range_candles.minimum(:low)
-  end
 end

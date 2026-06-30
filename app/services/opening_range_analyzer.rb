@@ -8,7 +8,19 @@ class OpeningRangeAnalyzer
   end
 
   def breakout_candle
-    @trading_day.candles_after_opening_range.find { |candle| candle.high > @trading_day.opening_range_high }
+    candles_after_opening_range.find do |candle|
+      candle.high > opening_range_high || candle.low < opening_range_low
+    end
+  end
+
+  def breakout_direction
+    return nil unless breakout_candle
+
+    if breakout_candle.high > opening_range_high
+      :long
+    elsif breakout_candle.low < opening_range_low
+      :short
+    end
   end
 
   def breakout_time
@@ -26,4 +38,15 @@ class OpeningRangeAnalyzer
     @trading_day.opening_range_candles.last.timestamp
   end
 
+  def opening_range_high
+    @trading_day.opening_range_candles.maximum(:high)
+  end
+
+  def opening_range_low
+    @trading_day.opening_range_candles.minimum(:low)
+  end
+
+  def candles_after_opening_range
+    @trading_day.ordered_candles.where("timestamp > ?", opening_range_end_time)
+  end
 end
