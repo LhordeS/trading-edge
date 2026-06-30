@@ -18,6 +18,14 @@
   ) %>
 </script>
 
+<div class="opening-range-analysis-card">
+  <p><strong>Breakout: </strong><%= @opening_range_analysis.breakout? %></p>
+  <p><strong>Breakout Direction: </strong><%= @opening_range_analysis.breakout_direction %></p>
+  <p><strong>Time to Breakout: </strong><%= @opening_range_analysis.minutes_to_breakout %> minutes</p>
+  <p><strong>MFE: </strong><%= @opening_range_analysis.maximum_favorable_excursion %> handles</p>
+  <p><strong>MAE: </strong><%= @opening_range_analysis.maximum_adverse_excursion %> handles</p>
+</div>
+
 <table>
   <thead>
     <tr>

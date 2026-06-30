@@ -1,4 +1,6 @@
 class OpeningRangeAnalyzer
+  OPENING_RANGE_DURATION = 30.minutes
+
   def initialize(trading_day)
     @trading_day = trading_day
   end
@@ -33,20 +35,49 @@ class OpeningRangeAnalyzer
     ((breakout_time - opening_range_end_time) / 60).to_i
   end
 
+  def maximum_favorable_excursion
+    return nil unless breakout_candle
+
+    if breakout_direction == :long
+      candles_after_breakout.maximum(:high) - opening_range_high
+    else opening_range_low - candles_after_breakout.minimum(:low)
+    end
+  end
+
+  def maximum_adverse_excursion
+    return nil unless breakout_candle
+    if breakout_direction == :long
+      opening_range_low - candles_after_breakout.minimum(:low)
+    else
+      candles_after_breakout.maximum(:high) - opening_range_high
+    end
+  end
+
   private
   def opening_range_end_time
-    @trading_day.opening_range_candles.last.timestamp
+    opening_range_candles.last.timestamp
   end
 
   def opening_range_high
-    @trading_day.opening_range_candles.maximum(:high)
+    opening_range_candles.maximum(:high)
   end
 
   def opening_range_low
-    @trading_day.opening_range_candles.minimum(:low)
+    opening_range_candles.minimum(:low)
   end
 
   def candles_after_opening_range
     @trading_day.ordered_candles.where("timestamp > ?", opening_range_end_time)
+  end
+
+  def opening_range_candles
+    @trading_day.ordered_candles
+    .where(timestamp: @trading_day.market_open...(@trading_day.market_open + OPENING_RANGE_DURATION))
+  end
+
+  def candles_after_breakout
+    return [] unless breakout_candle
+
+    candles_after_opening_range.where("timestamp > ?", breakout_candle.timestamp)
   end
 end

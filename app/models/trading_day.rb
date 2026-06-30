@@ -5,6 +5,10 @@ class TradingDay < ApplicationRecord
 
   validates :date, :symbol, presence: true
 
+  def market_open
+    ordered_candles.first.timestamp
+  end
+
   def session_high
     candles.maximum(:high)
   end
@@ -15,12 +19,5 @@ class TradingDay < ApplicationRecord
 
   def ordered_candles
     candles.order(:timestamp)
-  end
-
-  def opening_range_candles
-    start_time = ordered_candles.first.timestamp
-    end_time = start_time + 30.minutes
-
-    ordered_candles.where(timestamp: start_time...end_time)
   end
 end
