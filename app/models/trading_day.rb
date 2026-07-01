@@ -6,7 +6,7 @@ class TradingDay < ApplicationRecord
   validates :date, :symbol, presence: true
 
   def market_open
-    ordered_candles.first.timestamp
+    ordered_candles.first&.timestamp
   end
 
   def session_high
