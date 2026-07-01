@@ -17,6 +17,15 @@ document.addEventListener("turbo:load", () => {
     const chart = LightweightCharts.createChart(chartContainer, {
       width: candlesData.clientWidth,
       height: 500,
+
+      timeScale: {
+        timeVisible: true,
+        seconVisible:false,
+      },
+
+      localization: {
+        locale: "en-US",
+      }
     });
 
     const candleSeries = chart.addSeries(LightweightCharts.CandlestickSeries);
